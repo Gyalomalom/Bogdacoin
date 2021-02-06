@@ -5,7 +5,7 @@ genesis_block = {
         'id': 0,
         'pumps': []
     }
-bogchain = []
+bogchain = [genesis_block]
 open_pumps = []
 owner = 'Igor Bogdanoff'
 
@@ -31,6 +31,12 @@ def pump_et(recipient, sender=owner, amount=1.0):
 
 def mine_et():
     last_bog = bogchain[-1]
+    hashed_bog = ''
+
+    for keys in last_bog:
+        value = last_bog[keys]
+        hashed_bog = hashed_bog + str(value)
+    print(hashed_bog)
     block = {
         'previous_hash': 'XYZ',
         'id': len(bogchain),
@@ -79,8 +85,9 @@ while waiting_for_input:
     print('What do you want:')
     print('1: Pump eet.')
     print('2: See the BOGchain.')
-    print('3: Load the FUD. ')
-    print('4: Quit bogchain.')
+    print('3: Mine new bog.')
+    print('4: Load the FUD. ')
+    print('5: Quit bogchain.')
     user_choice = get_user_choice()
     if user_choice == '1':
         pp_data = get_pump_value()
@@ -90,15 +97,17 @@ while waiting_for_input:
     elif user_choice == '2':
         print_bogchain_elements()
     elif user_choice == '3':
+        mine_et()
+    elif user_choice == '4':
         if len(bogchain) >= 1:
             bogchain[0] = [2]
-    elif user_choice == '4':
+    elif user_choice == '5':
         waiting_for_input = False
     else:
         print('Input invalid, no pumps for you')
-    if not verify_chain():
-        print('Bogchain bogged!')
-        break
+    # if not verify_chain():
+    #     print('Bogchain bogged!')
+    #     break
 
 
 else:
